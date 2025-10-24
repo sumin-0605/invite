@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>새친구 초청 잔치 모바일 초대장</title>
+  <meta name="description" content="청년회 새친구 초청 잔치에 당신을 초대합니다. 같이 먹고 웃고 나누는 즐거운 시간!" />
+  <meta name="theme-color" content="#2b6ff9" />
+
+  <meta property="og:title" content="청년회 새친구 초청 잔치" />
+  <meta property="og:description" content="같이 먹고 웃고 나누는 즐거운 시간! 함께해요 ✨" />
+  <meta property="og:image" content="./og-image.jpg" />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <style>
+    @font-face{
+      font-family:'MitmiFont';
+      src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2') format('woff2');
+      font-weight:normal; font-display:swap;
+    }
+
+    :root{
+      --bg:#f7fbff; --paper:#ffffff; --ink:#0f172a; --muted:#667085;
+      --brand:#2b6ff9; --brand2:#7de0ff; --texture-opacity:.80;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:MitmiFont, Pretendard, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, sans-serif;line-height:1.6}
+    img{display:block;max-width:100%;height:auto}
+    a{color:inherit;text-decoration:none}
+
+    .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));z-index:50;box-shadow:0 0 10px rgba(122,166,255,.7)}
+
+    .bg-anim{position:fixed;inset:0;z-index:-3;overflow:hidden;}
+    .grad{position:absolute;inset:-20%;filter:blur(80px);background:conic-gradient(from 60deg at 25% 30%, #cfe4ff, #d7fff7, #fff2cc, #cfe4ff);animation:spin 36s linear infinite;opacity:.5}
+    @keyframes spin{to{transform:rotate(1turn)}}
+    .particles{position:absolute;inset:0;z-index:-1;pointer-events:none}
+
+    .wrap{position:relative;max-width:760px;margin:0 auto;padding:0 12px 120px; text-align:center;}
+    .wrap::before{
+      content:""; position:absolute; z-index:-1; left:6px; right:6px; top:72px; bottom:110px;
+      background:linear-gradient(#fff,#fff) padding-box, radial-gradient(120% 100% at 50% 0%, rgba(0,0,0,.025), transparent 60%) border-box;
+      border-radius:22px; box-shadow:0 20px 60px rgba(17,38,146,.08); outline:1px solid rgba(0,0,0,.02);
+    }
+    .wrap::after{
+      content:""; position:absolute; z-index:-1; left:6px; right:6px; top:72px; bottom:110px; pointer-events:none; border-radius:22px;
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.03) 0px, rgba(0,0,0,.03) 1px, transparent 1px, transparent 4px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.02) 0px, rgba(0,0,0,.02) 1px, transparent 1px, transparent 6px),
+        radial-gradient(1px 1px at 20% 30%, rgba(0,0,0,.05) 0 1px, transparent 1px),
+        radial-gradient(1px 1px at 70% 60%, rgba(0,0,0,.04) 0 1px, transparent 1px),
+        radial-gradient(1px 1px at 40% 80%, rgba(0,0,0,.035) 0 1px, transparent 1px);
+      mix-blend-mode:multiply; opacity:var(--texture-opacity);
+    }
+
+    header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(16,24,40,0.08)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+    .badge{font-size:12px;color:#0f172a;background:linear-gradient(90deg,#e7f0ff,#e6fffb);padding:6px 10px;border-radius:999px;border:1px solid rgba(16,24,40,0.08)}
+    .share-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1px solid rgba(16,24,40,0.12);background:#fff;cursor:pointer}
+
+    /* HERO */
+    .hero{position:relative;padding:0;margin:0}
+    .hero-card{position:relative;overflow:hidden;border-radius:0;background:none}
+    .hero-media{position:relative}
+    .cover{width:100%;height:auto;max-height:90vh;object-fit:contain;object-position:center;display:block;} 
+    @keyframes morph{0%{border-radius:40% 60% 60% 40%/40% 40% 60% 60%}100%{border-radius:60% 40% 50% 50%/40% 60% 40% 60%}}
+
+    /* 타이틀 오버레이(정중앙) */
+
+    .title{font-size:28px;line-height:1.2;font-weight:900;letter-spacing:-0.4px}
+    .typing{border-right:2px solid rgba(255,255,255,0.85);white-space:nowrap;overflow:hidden}
+/* ✅ 히어로 위 제목(타이핑)용 */
+.hero-heading{
+  padding: 28px 16px 0;     /* 상단 여백 */
+  text-align: center;
+}
+.hero-heading .title{
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 900;
+  letter-spacing: -0.4px;
+}
+.typing{
+  border-right: 2px solid rgba(0,0,0,0.35); /* 배경 위라 흰색 말고 진한 커서 */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+
+    /* SECTION */
+    .section{padding:24px 16px;border:none;}
+    .card{background:transparent;border:none;border-radius:0;box-shadow:none;padding:0;transform:none;opacity:1}
+    .section h2{margin:0 0 12px 0;font-size:18px}
+    .lead{color:var(--muted);line-height:1.7}
+
+    /* 섹션 간 여백 */
+    .section + .section{margin-top:80px}
+    @media (min-width:560px){ .section + .section{margin-top:50px} }
+
+    /* CAROUSEL */
+    .carousel{position:relative;margin-top:8px}
+    .c-track{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;padding-bottom:6px}
+    .c-track::-webkit-scrollbar{height:6px}
+    .c-track::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:999px}
+    .c-slide{flex:0 0 100%;scroll-snap-align:center;position:relative}
+    @media (min-width:560px){ .c-slide{flex-basis:80%} }
+    .c-slide img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;box-shadow:0 10px 20px rgba(0,0,0,.10);-webkit-user-drag:none;user-select:none}
+    .c-arrow{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:1px solid rgba(16,24,40,0.12);width:38px;height:38px;border-radius:12px;font-size:26px;line-height:36px;color:#0f172a;cursor:pointer;z-index:2;opacity:.92}
+    #cPrev{left:6px} #cNext{right:6px}
+    .c-ind{margin-top:8px;font-size:12px;color:var(--muted);text-align:center}
+
+    /* INFO */
+    .info-list{display:grid;gap:10px; text-align:left; max-width:680px; margin:0 auto}
+    .info-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid rgba(16,24,40,0.08)}
+    .info-item:last-child{border-bottom:none}
+    .info-key{width:92px;color:var(--brand2);font-weight:800}
+    .info-val{flex:1}
+
+    /* BUTTONS */
+    .btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:14px 16px;font-weight:900;letter-spacing:-0.2px;cursor:pointer;transform:translateZ(0)}
+    .btn-primary{background:linear-gradient(90deg,var(--brand),var(--brand2));color:#fff;flex:1;box-shadow:0 6px 16px rgba(43,111,249,.25)}
+    .btn-ghost{background:#fff;color:#2456d8;border:1px solid rgba(43,111,249,0.35)}
+    .btn .ripple{position:absolute;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;background:rgba(255,255,255,.45);animation:ripple .6s ease-out forwards}
+    @keyframes ripple{to{opacity:0;transform:translate(-50%,-50%) scale(10)}}
+
+    .dock{position:fixed;left:0;right:0;bottom:0;z-index:45;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border-top:1px solid rgba(16,24,40,0.08)}
+    .dock-inner{max-width:720px;margin:0 auto;display:flex;gap:10px;align-items:center;padding:10px 12px}
+    .tiny{font-size:12px;color:var(--muted)}
+
+    #fx{position:fixed;inset:0;pointer-events:none;z-index:70}
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="bg-anim"><div class="grad"></div><canvas class="particles" id="particles"></canvas></div>
+
+  <div class="wrap">
+    <header>
+      <div class="nav" role="navigation" aria-label="상단 바">
+        <div class="brand"><span>청년회</span><span class="badge">새친구 초대</span></div>
+        <button class="share-btn" id="shareBtn" aria-label="초대장 공유">공유</button>
+      </div>
+    </header>
+      <!-- 타이틀 오버레이 -->
+<section class="hero-heading" aria-labelledby="heroTitle"style="margin-top: 1rem;">
+  <h1 id="heroTitle" class="title"><span class="typing" id="typing"></span></h1>
+</section>
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="heroTitle" style="margin-top: 5rem;">
+      <div class="hero-card" id="heroCard">
+        <div class="hero-media">
+    
+          <!-- 이미지는 hero-media 안에 -->
+          <img class="cover" id="cover" src="./images/cover.jpg" alt="청년회 초대 포스터">
+          <div class="blob" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 초대말 -->
+    <section class="section" aria-labelledby="inviteTitle">
+      <div class="card">
+        <h2 id="inviteTitle" style="margin-top: 5rem;">초대합니다</h2>
+        <p class="lead" id="inviteMsg">
+          소중한 당신을 초대합니다!<br>
+          청년회가 정성껏 준비했어요. 처음이어도 어색하지 않게,<br>
+          함께 게임하고, 웃고, 맛있는 음식도 나눠요!<br>
+          당신의 삶에 작은 위로와 기쁨이 되길 바라요.
+        </p>
+      </div>
+    </section>
+
+    <!-- 갤러리(스와이프) -->
+    <section class="section" aria-labelledby="galleryTitle">
+      <div class="card">
+        <h2 id="galleryTitle">우리 청년회 스냅샷</h2>
+        <p>우리 공동체는 이래요 ㅎ.ㅎ</p>
+        <p class="tiny">옆으로 쓸어 넘겨 보세요 👈👉</p>
+        <div class="carousel" id="carousel" aria-roledescription="carousel" aria-label="청년회 사진 캐러셀">
+          <button class="c-arrow" id="cPrev" aria-label="이전 사진">‹</button>
+          <div class="c-track" id="cTrack">
+            <div class="c-slide"><img src="./images/p1.jpg" alt="청년회 사진 1"></div>
+            <div class="c-slide"><img src="./images/p2.jpg" alt="청년회 사진 2"></div>
+            <div class="c-slide"><img src="./images/p3.jpg" alt="청년회 사진 3"></div>
+            <div class="c-slide"><img src="./images/p4.jpg" alt="청년회 사진 4"></div>
+            <div class="c-slide"><img src="./images/p5.jpg" alt="청년회 사진 5"></div>
+            <div class="c-slide"><img src="./images/p6.jpg" alt="청년회 사진 6"></div>
+            <div class="c-slide"><img src="./images/p7.jpg" alt="청년회 사진 7"></div>
+            <div class="c-slide"><img src="./images/p8.jpg" alt="청년회 사진 8"></div>
+            <div class="c-slide"><img src="./images/p9.jpg" alt="청년회 사진 9"></div>
+            <div class="c-slide"><img src="./images/p10.jpg" alt="청년회 사진 10"></div>
+            <div class="c-slide"><img src="./images/p11.jpg" alt="청년회 사진 11"></div>
+            <div class="c-slide"><img src="./images/p12.jpg" alt="청년회 사진 12"></div>
+          </div>
+          <button class="c-arrow" id="cNext" aria-label="다음 사진">›</button>
+        </div>
+        <div class="c-ind" id="cInd" aria-live="polite">1 / 12</div>
+      </div>
+    </section>
+
+    <!-- 소개 & 정보 -->
+    <section class="section" aria-labelledby="aboutTitle">
+      <div class="card">
+        <h2 id="aboutTitle">새친구 초청 잔치 소개</h2>
+        <p class="lead" id="aboutMsg">
+          예배를 함께 드린 후 청년회가 준비한 다양한 프로그램을 함께해요!💙
+          즐거운 게임과 멋진 무대, 따뜻한 음식과 나눔까지!
+        </p>
+        <div class="info-list" role="list">
+          <div class="info-item" role="listitem"><div class="info-key">일시</div><div class="info-val" id="infoDate">2025년 11월 23일(주일) 오후 1시 30분</div></div>
+          <div class="info-item" role="listitem"><div class="info-key">장소</div><div class="info-val" id="infoPlace">부산 초읍교회 비전센터 2층 비전홀 (부산 부산진구 월드컵대로449번길 44-6)</div></div>
+          <div class="info-item" role="listitem"><div class="info-key">드레스코드</div><div class="info-val">편안하게 😊</div></div>
+          <div class="info-item" role="listitem"><div class="info-key">문의</div><div class="info-val">청년회 인스타 DM - @choep_church_youngman</div></div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+          <a class="btn btn-ghost" id="mapBtn" href="#" target="_blank" rel="noopener">지도 열기</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 참석 여부 -->
+    <section class="section" aria-labelledby="rsvpTitle">
+      <div class="card">
+        <h2 id="rsvpTitle">저희와 함께 해주실거죠?!</h2>
+        <p class="lead">아래 버튼을 눌러 간단히 참석여부를 남겨주세요. (1분 컷)</p>
+        <a class="btn btn-primary" id="rsvpBtn" href="#" target="_blank" rel="noopener" aria-label="RSVP 링크 열기">참석여부 체크 하러가기 ✨</a>
+        <p class="tiny" style="margin-top:10px">* 링크가 안 열리면, 아래 복사 버튼으로 링크를 복사해 친구에게 보내주세요.</p>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <input id="rsvpInput" type="text" value="" readonly style="flex:1;padding:12px;border-radius:12px;border:1px solid rgba(160,200,255,0.25);background:rgba(255,255,255,0.06);color:var(--ink)" aria-label="참석여부 링크"/>
+          <button class="btn btn-ghost" id="copyBtn">복사</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="dock" role="contentinfo">
+    <div class="dock-inner">
+      <div style="flex:1">
+        <div style="font-weight:800">새친구 초청 잔치</div>
+        <div class="tiny" id="dockInfo">2025-11-23(주일) 13:30 · 부산 초읍교회 비전센터 2층 비전홀</div>
+      </div>
+      <a class="btn btn-primary" id="dockRsvp" href="#" target="_blank" rel="noopener">참석여부 체크!</a>
+    </div>
+  </div>
+
+  <canvas id="fx"></canvas>
+
+<script>
+/* ========= 공용 ========= */
+const EVENT = {
+  title:'청년회 새친구 초청 잔치',
+  dateText:'2025-11-23(주일) 13:30',
+  placeText:'부산 초읍교회 비전센터 2층 비전홀',
+  fullAddress:'부산 부산진구 월드컵대로449번길 44-6',
+  mapUrl:'https://map.naver.com/v5/search/' + encodeURIComponent('부산 초읍교회'),
+  rsvpUrl:'https://forms.gle/your-google-form',
+  calendar:{ start:'20251123T043000Z', end:'20251123T063000Z', details:'청년회 새친구 초청 잔치 함께해요!' }
+};
+const $ = s => document.querySelector(s);
+
+/* 안전 설정자(사라진 요소 접근 시 에러 방지) */
+const setText = (sel, text) => { const el=$(sel); if(el) el.textContent=text; };
+const setHref = (sel, url) => { const el=$(sel); if(el) el.href=url; };
+
+/* 진행바 */
+const progress = $('#progress');
+window.addEventListener('scroll', ()=>{
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const p = (window.scrollY / max) * 100;
+  progress.style.width = p + '%';
+});
+
+/* 히어로 타이핑 */
+const typingEl = $('#typing');
+const typingText = '새친구 초청 잔치에 함께해요 ✨';
+let ti = 0; (function type(){ if(ti<=typingText.length){ typingEl.textContent = typingText.slice(0,ti++); setTimeout(type,24);} })();
+
+/* 이벤트 정보 주입(필요한 것만) */
+setText('#infoDate', EVENT.dateText.replace('(', ' ('));
+setText('#infoPlace', `${EVENT.placeText} (${EVENT.fullAddress})`);
+setHref('#mapBtn', EVENT.mapUrl);
+setHref('#rsvpBtn', EVENT.rsvpUrl);
+setHref('#dockRsvp', EVENT.rsvpUrl);
+setText('#dockInfo', `${EVENT.dateText} · ${EVENT.placeText}`);
+
+/* 공유 & 복사 & 리플 */
+const addRipple = (btn, e)=>{ const r=document.createElement('span'); r.className='ripple';
+  const rect=btn.getBoundingClientRect(); r.style.left=(e.clientX-rect.left)+'px'; r.style.top=(e.clientY-rect.top)+'px';
+  r.style.width=r.style.height=Math.max(rect.width,rect.height)+'px'; btn.appendChild(r); setTimeout(()=>r.remove(),600);
+};
+['shareBtn','copyBtn','rsvpBtn','dockRsvp','mapBtn'].forEach(id=>{
+  const el=document.getElementById(id); if(!el) return; el.addEventListener('click', (e)=>addRipple(el,e));
+});
+const shareBtn = document.getElementById('shareBtn');
+if(shareBtn){
+  shareBtn.addEventListener('click', async ()=>{
+    const shareData = { title: EVENT.title, text: `같이 가요! ${EVENT.dateText} · ${EVENT.placeText}`, url: location.href };
+    try{ if(navigator.share){ await navigator.share(shareData);} else { await navigator.clipboard.writeText(location.href); alert('링크가 복사됐어요!'); } }catch(e){}
+  });
+}
+const copyBtn = document.getElementById('copyBtn');
+if(copyBtn){
+  copyBtn.addEventListener('click', async ()=>{
+    try{ await navigator.clipboard.writeText($('#rsvpInput').value);}catch(_){} alert('참석여부 링크가 복사됐어요!');
+  });
+}
+
+/* 스크롤 리빌(복구) */
+document.querySelectorAll('.card').forEach(c=>{ c.style.opacity=.001; c.style.transform='translateY(18px)'; });
+const io = new IntersectionObserver((ents)=>{
+  ents.forEach(ent=>{
+    if(ent.isIntersecting){
+      ent.target.style.transition='transform 1.4s cubic-bezier(.2,.7,.2,1), opacity 1.4s';
+      ent.target.style.transform='translateY(0)';
+      ent.target.style.opacity=1;
+      io.unobserve(ent.target);
+    }else{
+      ent.target.style.transform='translateY(18px)';
+    }
+  });
+},{threshold:.18});
+document.querySelectorAll('.card').forEach(c=>io.observe(c));
+
+/* 히어로 패럴랙스 + 플레이스홀더 */
+const heroCard = document.getElementById('heroCard');
+const cover = document.getElementById('cover');
+(function(){
+  const hasCover = cover.getAttribute('src') && cover.getAttribute('src') !== '';
+  if(!hasCover){
+    const ph=document.createElement('canvas'); ph.width=1600; ph.height=900;
+    const c=ph.getContext('2d'); c.fillStyle='#e7ebf2'; c.fillRect(0,0,ph.width,ph.height);
+    c.fillStyle='#cfd6e2'; for(let x=0;x<ph.width;x+=24){ c.fillRect(x,0,12,ph.height); }
+    cover.src=ph.toDataURL();
+  }
+})();
+const parallax=(x,y)=>{ const rx=(y-0.5)*6, ry=(x-0.5)*-6; cover.style.transform=`translateZ(0) scale(1.04) rotateX(${rx}deg) rotateY(${ry}deg)`; };
+heroCard.addEventListener('pointermove',(e)=>{ const r=heroCard.getBoundingClientRect(); parallax((e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height); });
+heroCard.addEventListener('pointerleave',()=>{ cover.style.transform='translateZ(0)'; });
+if(window.DeviceOrientationEvent){ window.addEventListener('deviceorientation',(e)=>{ const x=(e.gamma||0)/45/2+0.5; const y=(e.beta||0)/45/2+0.5; parallax(x,y); }, true); }
+
+/* 캐러셀 */
+const track=document.getElementById('cTrack');
+const slides=[...track.querySelectorAll('.c-slide')];
+const prevBtn=document.getElementById('cPrev');
+const nextBtn=document.getElementById('cNext');
+const ind=document.getElementById('cInd');
+let idx=0;
+function go(i){
+  idx=Math.max(0,Math.min(slides.length-1,i));
+  const padL=parseInt(getComputedStyle(track).paddingLeft||'0',10);
+  const x=slides[idx].offsetLeft-padL;
+  track.scrollTo({left:x,behavior:'smooth'});
+  if(ind) ind.textContent=(idx+1)+' / '+slides.length;
+}
+prevBtn.addEventListener('click',()=>go(idx-1));
+nextBtn.addEventListener('click',()=>go(idx+1));
+let raf=null;
+track.addEventListener('scroll',()=>{
+  if(raf) cancelAnimationFrame(raf);
+  raf=requestAnimationFrame(()=>{
+    const center=track.scrollLeft+track.clientWidth/2;
+    let best=0, bestDist=Infinity;
+    slides.forEach((s,i)=>{ const mid=s.offsetLeft+s.clientWidth/2; const d=Math.abs(mid-center); if(d<bestDist){bestDist=d; best=i;} });
+    if(best!==idx){ idx=best; if(ind) ind.textContent=(idx+1)+' / '+slides.length; }
+  });
+});
+track.setAttribute('tabindex','0');
+track.addEventListener('keydown',(e)=>{ if(e.key==='ArrowLeft'){e.preventDefault();go(idx-1);} if(e.key==='ArrowRight'){e.preventDefault();go(idx+1);} });
+
+/* 컨페티 */
+const fx=document.getElementById('fx'); const ctx=fx.getContext('2d');
+function resize(){ fx.width=innerWidth; fx.height=innerHeight; } window.addEventListener('resize',resize); resize();
+let conf=[], rafId=null;
+function burst(x,y){
+  for(let i=0;i<140;i++){ conf.push({x,y,vx:(Math.random()*2-1)*4,vy:(Math.random()*-3-2),g:0.08+Math.random()*0.08,s:4+Math.random()*4,a:1,c:`hsl(${Math.random()*360},90%,65%)`}); }
+  if(navigator.vibrate) navigator.vibrate(20);
+  if(!rafId) loop();
+}
+function loop(){ rafId=requestAnimationFrame(loop); ctx.clearRect(0,0,fx.width,fx.height);
+  conf.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=p.g; p.a-=0.006; ctx.globalAlpha=Math.max(p.a,0); ctx.fillStyle=p.c; ctx.fillRect(p.x,p.y,p.s,p.s); });
+  conf=conf.filter(p=>p.a>0 && p.y<fx.height+20); if(conf.length===0){ cancelAnimationFrame(rafId); rafId=null; }
+}
+document.getElementById('rsvpBtn').addEventListener('click',(e)=>{ const r=e.currentTarget.getBoundingClientRect(); burst(r.left+r.width/2, r.top); });
+document.getElementById('dockRsvp').addEventListener('click',(e)=>{ const r=e.currentTarget.getBoundingClientRect(); burst(r.left+r.width/2, innerHeight-80); });
+
+/* 파티클 배경 */
+const pc=document.getElementById('particles'); const pctx=pc.getContext('2d');
+function presize(){ pc.width=innerWidth; pc.height=innerHeight; } window.addEventListener('resize',presize); presize();
+const dots=Array.from({length:60},()=>({x:Math.random()*pc.width,y:Math.random()*pc.height,r:Math.random()*2+0.6,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25}));
+(function ploop(){ requestAnimationFrame(ploop); pctx.clearRect(0,0,pc.width,pc.height); pctx.fillStyle='rgba(17,38,146,.18)';
+  dots.forEach(d=>{ d.x+=d.vx; d.y+=d.vy; if(d.x<0||d.x>pc.width) d.vx*=-1; if(d.y<0||d.y>pc.height) d.vy*=-1; pctx.beginPath(); pctx.arc(d.x,d.y,d.r,0,Math.PI*2); pctx.fill(); });
+})();
+</script>
+</body>
+</html>
