@@ -311,7 +311,7 @@ document.querySelectorAll('.card').forEach(c=>{ c.style.opacity=.001; c.style.tr
 const io = new IntersectionObserver((ents)=>{
   ents.forEach(ent=>{
     if(ent.isIntersecting){
-      ent.target.style.transition='transform 1.4s cubic-bezier(.2,.7,.2,1), opacity 1.4s';
+      ent.target.style.transition='transform 2s cubic-bezier(.2,.7,.2,1), opacity 2s';
       ent.target.style.transform='translateY(0)';
       ent.target.style.opacity=1;
       io.unobserve(ent.target);
@@ -394,3 +394,4 @@ const dots=Array.from({length:60},()=>({x:Math.random()*pc.width,y:Math.random()
 </script>
 </body>
 </html>
+
