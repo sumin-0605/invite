@@ -138,7 +138,7 @@
   <div class="wrap">
     <header>
       <div class="nav" role="navigation" aria-label="상단 바">
-        <div class="brand"><span>청년회</span><span class="badge">새친구 초대</span></div>
+        <div class="brand"><span>초읍 청년회</span><span class="badge">🎉WELCOME DAY🎉</span></div>
         <button class="share-btn" id="shareBtn" aria-label="초대장 공유">공유</button>
       </div>
     </header>
@@ -163,10 +163,8 @@
       <div class="card">
         <h2 id="inviteTitle" style="margin-top: 5rem;">초대합니다</h2>
         <p class="lead" id="inviteMsg">
-          소중한 당신을 초대합니다!<br>
-          청년회가 정성껏 준비했어요. 처음이어도 어색하지 않게,<br>
-          함께 게임하고, 웃고, 맛있는 음식도 나눠요!<br>
-          당신의 삶에 작은 위로와 기쁨이 되길 바라요.
+          당신은~ 사랑 받기 위해 태어난 사람~<br>
+          예수님과 초읍 청년회가 여러분을 목 빠지게 기다리고 있어요❤️
         </p>
       </div>
     </section>
@@ -204,7 +202,7 @@
       <div class="card">
         <h2 id="aboutTitle">새친구 초청 잔치 소개</h2>
         <p class="lead" id="aboutMsg">
-          예배를 함께 드린 후 청년회가 준비한 다양한 프로그램을 함께해요!💙
+          예배를 함께 드린 후 <BR /> 청년회가 준비한 다양한 프로그램을 함께해요!💙<BR />
           즐거운 게임과 멋진 무대, 따뜻한 음식과 나눔까지!
         </p>
         <div class="info-list" role="list">
@@ -227,7 +225,7 @@
         <a class="btn btn-primary" id="rsvpBtn" href="#" target="_blank" rel="noopener" aria-label="RSVP 링크 열기">참석여부 체크 하러가기 ✨</a>
         <p class="tiny" style="margin-top:10px">* 링크가 안 열리면, 아래 복사 버튼으로 링크를 복사해 친구에게 보내주세요.</p>
         <div style="display:flex;gap:8px;margin-top:8px">
-          <input id="rsvpInput" type="text" value="" readonly style="flex:1;padding:12px;border-radius:12px;border:1px solid rgba(160,200,255,0.25);background:rgba(255,255,255,0.06);color:var(--ink)" aria-label="참석여부 링크"/>
+          <input id="rsvpInput" type="text" value="https://docs.google.com/forms/d/e/1FAIpQLSdkZ-ZYHMOCtpYxFUHfGoKjNQxG7tfXU_UZX8wfxoXGHdcxUw/viewform?usp=dialog" readonly style="flex:1;padding:12px;border-radius:12px;border:1px solid rgba(160,200,255,0.25);background:rgba(255,255,255,0.06);color:var(--ink)" aria-label="참석여부 링크"/>
           <button class="btn btn-ghost" id="copyBtn">복사</button>
         </div>
       </div>
@@ -254,7 +252,7 @@ const EVENT = {
   placeText:'부산 초읍교회 비전센터 2층 비전홀',
   fullAddress:'부산 부산진구 월드컵대로449번길 44-6',
   mapUrl:'https://map.naver.com/v5/search/' + encodeURIComponent('부산 초읍교회'),
-  rsvpUrl:'https://forms.gle/your-google-form',
+  rsvpUrl:'https://docs.google.com/forms/d/e/1FAIpQLSdkZ-ZYHMOCtpYxFUHfGoKjNQxG7tfXU_UZX8wfxoXGHdcxUw/viewform?usp=dialog',
   calendar:{ start:'20251123T043000Z', end:'20251123T063000Z', details:'청년회 새친구 초청 잔치 함께해요!' }
 };
 const $ = s => document.querySelector(s);
@@ -273,7 +271,7 @@ window.addEventListener('scroll', ()=>{
 
 /* 히어로 타이핑 */
 const typingEl = $('#typing');
-const typingText = '새친구 초청 잔치에 함께해요 ✨';
+const typingText = '[ WELCOME DAY : 새친구 초청잔치 ]';
 let ti = 0; (function type(){ if(ti<=typingText.length){ typingEl.textContent = typingText.slice(0,ti++); setTimeout(type,24);} })();
 
 /* 이벤트 정보 주입(필요한 것만) */
@@ -394,4 +392,3 @@ const dots=Array.from({length:60},()=>({x:Math.random()*pc.width,y:Math.random()
 </script>
 </body>
 </html>
-
