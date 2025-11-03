@@ -129,6 +129,66 @@
     .tiny{font-size:12px;color:var(--muted)}
 
     #fx{position:fixed;inset:0;pointer-events:none;z-index:70}
+
+    /* ▽ Program Table */
+.table-wrap{
+  overflow:auto;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 8px 30px rgba(17,38,146,.08);
+  border:1px solid rgba(16,24,40,0.06);
+}
+.program-caption{
+  text-align:left; padding:12px 10px; font-weight:900;
+  color:var(--ink); letter-spacing:-0.2px;
+}
+.program-table{
+  width:100%; border-collapse:separate; border-spacing:0;
+  min-width:480px; /* 좁은 화면에서 가로스크롤 */
+  font-family:inherit;
+}
+.program-table thead th{
+  position:sticky; top:0; z-index:1;
+  background:linear-gradient(0deg,#eef5ff,#f7fbff);
+  color:#0f172a; font-weight:800; text-align:center;
+  border-bottom:1px solid rgba(16,24,40,0.12);
+  padding:12px 10px; font-size:14px;
+}
+.program-table td{
+  padding:12px 10px; font-size:14px; text-align:center;
+  border-bottom:1px solid rgba(16,24,40,0.08);
+  background:#fff;
+}
+.program-table tr:nth-child(even) td{ background:#fbfdff; }
+.program-table th:first-child, .program-table td:first-child{ width:40%; }
+.program-table th:last-child,  .program-table td:last-child{ width:60%; }
+
+/* 둥근 모서리 */
+.program-table thead th:first-child{ border-top-left-radius:16px; }
+.program-table thead th:last-child{ border-top-right-radius:16px; }
+.program-table tbody tr:last-child td:first-child{ border-bottom-left-radius:16px; }
+.program-table tbody tr:last-child td:last-child{ border-bottom-right-radius:16px; }
+
+/* 진행중 하이라이트 */
+.program-table tr.now td{
+  background:linear-gradient(90deg, rgba(125,224,255,.20), rgba(43,111,249,.08));
+  border-bottom-color: rgba(43,111,249,.35);
+}
+.program-table tr.now td:first-child{
+  box-shadow:inset 4px 0 0 0 var(--brand);
+  font-weight:900;
+}
+.program-note{ margin-top:8px; color:var(--muted); font-size:12px; text-align:right; }
+
+
+@media (max-width: 480px){
+  .program-table{ min-width: 0; }                  /* ✅ 가로 스크롤 안 생기게 */
+  .program-table thead th,
+  .program-table td{ padding:10px 8px; font-size:13px; }
+  .program-table th:first-child, .program-table td:first-child{ width:72px; }
+  .program-caption{ padding:10px 8px; }
+}
+
   </style>
 </head>
 <body>
@@ -220,6 +280,39 @@
           <a class="btn btn-ghost" id="mapBtn" href="#" target="_blank" rel="noopener">지도 열기</a>
         </div>
       </div>
+      <!-- 프로그램 일정 -->
+<section class="section" aria-labelledby="programTitle">
+  <div class="card">
+    <h2 id="programTitle">📅프로그램 일정📅</h2>
+    <div class="table-wrap" role="region" aria-labelledby="programTitle">
+      <div class="program-caption">23일(주일) 순서표</div>
+      <table class="program-table" aria-describedby="programTitle">
+        <colgroup>
+          <col style="width:40%"><col style="width:60%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">순번</th>
+            <th scope="col">내용</th>
+          </tr>
+        </thead>
+        <tbody id="programBody">
+          <tr data-start="13:00" data-end="13:30"><td>1</td><td>준비 및 안내</td></tr>
+          <tr data-start="13:30" data-end="13:50"><td>2</td><td>찬양</td></tr>
+          <tr data-start="13:50" data-end="13:55"><td>3</td><td>영상</td></tr>
+          <tr data-start="13:55" data-end="14:10"><td>4</td><td>공연</td></tr>
+          <tr data-start="14:10" data-end="14:15"><td>5</td><td>간증</td></tr>
+          <tr data-start="14:15" data-end="14:25"><td>6</td><td>설교</td></tr>
+          <tr data-start="14:25" data-end="14:30"><td>7</td><td>영접 기도</td></tr>
+          <tr data-start="14:30" data-end="14:35"><td>8</td><td>광고</td></tr>
+          <tr data-start="14:35" data-end=""><td>9</td><td>식사 및 소그룹</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="program-note">* 현장 상황에 따라 일부 시간이나 일정이 조정될 수 있어요.</p>
+  </div>
+</section>
+
     </section>
 
     <!-- 참석 여부 -->
@@ -393,6 +486,47 @@ const dots=Array.from({length:60},()=>({x:Math.random()*pc.width,y:Math.random()
 (function ploop(){ requestAnimationFrame(ploop); pctx.clearRect(0,0,pc.width,pc.height); pctx.fillStyle='rgba(17,38,146,.18)';
   dots.forEach(d=>{ d.x+=d.vx; d.y+=d.vy; if(d.x<0||d.x>pc.width) d.vx*=-1; if(d.y<0||d.y>pc.height) d.vy*=-1; pctx.beginPath(); pctx.arc(d.x,d.y,d.r,0,Math.PI*2); pctx.fill(); });
 })();
+
+/* ===== 프로그램 진행중 하이라이트 ===== */
+(function(){
+  const rows = document.querySelectorAll('#programBody tr');
+  if(!rows.length) return;
+
+  // EVENT.dateText 예: '2025-11-23(주일) 13:30' → 날짜만 뽑기
+  const dateOnly = (EVENT.dateText.match(/\d{4}-\d{2}-\d{2}/)?.[0]) || '2025-11-23';
+  const tzOffsetMin = (new Date()).getTimezoneOffset(); // 현지 기준
+
+  function toDateAt(timeStr){ // '13:30' → Date(이벤트 날짜 13:30)
+    if(!timeStr) return null;
+    const [h,m] = timeStr.split(':').map(n=>parseInt(n,10));
+    const d = new Date(`${dateOnly}T${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:00`);
+    return d;
+  }
+
+  function tick(){
+    const now = new Date(); // 현지
+    let activeFound = false;
+
+    rows.forEach(tr=>{
+      tr.classList.remove('now');
+      const s = toDateAt(tr.dataset.start);
+      const e = tr.dataset.end ? toDateAt(tr.dataset.end) : null;
+      if(!s) return;
+
+      const end = e || new Date(`${dateOnly}T23:59:59`);
+      if(now >= s && now < end){
+        tr.classList.add('now');
+        activeFound = true;
+      }
+    });
+
+    // 이벤트 날이 아니거나 시간이 벗어나면 하이라이트 없음 (조용히 패스)
+  }
+
+  tick();
+  setInterval(tick, 30 * 1000); // 30초마다 갱신
+})();
+
 </script>
 </body>
 </html>
