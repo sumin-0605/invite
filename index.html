@@ -189,6 +189,33 @@
   .program-caption{ padding:10px 8px; }
 }
 
+/* ▽ 일정표 페이드-인 + 행 스태거 */
+.table-wrap{
+  opacity:0; transform:translateY(10px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.table-wrap.show{ opacity:1; transform:none; }
+
+/* 각 행도 차례로 올라오게 */
+.program-table tbody tr{
+  opacity:0; transform:translateY(6px);
+  transition:opacity .5s ease, transform .5s ease;
+}
+/* show가 붙으면 행 노출 */
+.table-wrap.show .program-table tbody tr{
+  opacity:1; transform:none;
+}
+
+/* 모션 민감 사용자 배려 */
+@media (prefers-reduced-motion: reduce){
+  .table-wrap, .program-table tbody tr{
+    transition:none !important;
+    transform:none !important;
+    opacity:1 !important;
+  }
+}
+
+
   </style>
 </head>
 <body>
@@ -281,7 +308,7 @@
         </div>
       </div>
       <!-- 프로그램 일정 -->
-<section class="section" aria-labelledby="programTitle">
+<section class="section" aria-labelledby="programTitle" style="margin-top: 5rem;">
   <div class="card">
     <h2 id="programTitle">📅프로그램 일정📅</h2>
     <div class="table-wrap" role="region" aria-labelledby="programTitle">
@@ -296,16 +323,13 @@
             <th scope="col">내용</th>
           </tr>
         </thead>
-        <tbody id="programBody">
-          <tr data-start="13:00" data-end="13:30"><td>1</td><td>준비 및 안내</td></tr>
+        <tbody id="programBody" >
+          <tr data-start="13:00" data-end="13:30"><td>1</td><td>웰컴 타임</td></tr>
           <tr data-start="13:30" data-end="13:50"><td>2</td><td>찬양</td></tr>
-          <tr data-start="13:50" data-end="13:55"><td>3</td><td>영상</td></tr>
-          <tr data-start="13:55" data-end="14:10"><td>4</td><td>공연</td></tr>
-          <tr data-start="14:10" data-end="14:15"><td>5</td><td>간증</td></tr>
-          <tr data-start="14:15" data-end="14:25"><td>6</td><td>설교</td></tr>
-          <tr data-start="14:25" data-end="14:30"><td>7</td><td>영접 기도</td></tr>
-          <tr data-start="14:30" data-end="14:35"><td>8</td><td>광고</td></tr>
-          <tr data-start="14:35" data-end=""><td>9</td><td>식사 및 소그룹</td></tr>
+          <tr data-start="13:55" data-end="14:10"><td>3</td><td>공연</td></tr>
+          <tr data-start="14:10" data-end="14:15"><td>4</td><td>간증</td></tr>
+          <tr data-start="14:15" data-end="14:25"><td>5</td><td>말씀</td></tr>
+          <tr data-start="14:35" data-end=""><td>6</td><td>식사</td></tr>
         </tbody>
       </table>
     </div>
@@ -334,7 +358,7 @@
     <div class="dock-inner">
       <div style="flex:1">
         <div style="font-weight:800">새친구 초청 잔치</div>
-        <div class="tiny" id="dockInfo">2025-11-23(주일) 13:30 · 부산 초읍교회 비전센터 2층 비전홀</div>
+        <div class="tiny" id="dockInfo">2025-11-23 13:30 <br /> 부산 초읍교회 비전센터 2층 비전홀</div>
       </div>
       <a class="btn btn-primary" id="dockRsvp" href="#" target="_blank" rel="noopener">참석여부 체크!</a>
     </div>
@@ -525,6 +549,30 @@ const dots=Array.from({length:60},()=>({x:Math.random()*pc.width,y:Math.random()
 
   tick();
   setInterval(tick, 30 * 1000); // 30초마다 갱신
+})();
+
+/* ===== 일정표 투명→등장 + 행 스태거 ===== */
+(function(){
+  const wrap = document.querySelector('.table-wrap');
+  if(!wrap) return;
+
+  // 행들에 스태거 딜레이 부여
+  const rows = wrap.querySelectorAll('tbody tr');
+  rows.forEach((tr, i)=>{
+    tr.style.transitionDelay = (100 + i*70) + 'ms'; // 0.1s부터 0.07s 간격
+  });
+
+  // 뷰포트 들어오면 show 클래스 부여
+  const obs = new IntersectionObserver((ents)=>{
+    ents.forEach(ent=>{
+      if(ent.isIntersecting){
+        wrap.classList.add('show');
+        obs.disconnect();
+      }
+    });
+  }, { threshold:.2 });
+
+  obs.observe(wrap);
 })();
 
 </script>
