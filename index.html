@@ -256,7 +256,7 @@
       </div>
     </section>
 
-    <!-- 갤러리(스와이프) -->
+    <!-- 갤러리(스와이프)
     <section class="section" aria-labelledby="galleryTitle">
       <div class="card">
         <h2 id="galleryTitle">우리 청년회 스냅샷</h2>
@@ -282,21 +282,23 @@
         </div>
         <div class="c-ind" id="cInd" aria-live="polite">1 / 12</div>
       </div>
-    </section>
+    </section> -->
 
     <!-- 소개 & 정보 -->
     <section class="section" aria-labelledby="aboutTitle">
       <div class="card">
         <h2 id="aboutTitle">새친구 초청 잔치 소개</h2>
         <p class="lead" id="aboutMsg">
-          예배를 함께 드린 후 <BR /> 청년회가 준비한 다양한 프로그램을 함께해요!💙<BR />
+          <BR /> 청년회가 준비한 다양한 프로그램을 함께해요!💙<BR />
           즐거운 게임과 멋진 무대, 따뜻한 음식과 나눔까지!
 
           <BR />
           <BR />
-          ps. 일찍 오셔서 기념 사진도 촬영해보세요!📸 (미니 포토존) <br />
-          편하게 오셔서 따뜻한 시간을 나눠보아요 ☁️🫶
+          추억의 선물뽑기 / 폴라로이드로 추억을 남겨요🫶
+          <BR />맛있는 음식들! 콜팝, 오뎅, 주먹밥, 만두 등등 🍗🥤🍢🍝
         </p>
+
+        
         <div class="info-list" role="list">
           <div class="info-item" role="listitem"><div class="info-key">일시</div><div class="info-val" id="infoDate">2025년 11월 23일(주일) 오후 1시 30분</div></div>
           <div class="info-item" role="listitem"><div class="info-key">장소</div><div class="info-val" id="infoPlace">부산 초읍교회 비전센터 2층 비전홀 (부산 부산진구 월드컵대로449번길 44-6)</div></div>
@@ -459,6 +461,7 @@ heroCard.addEventListener('pointerleave',()=>{ cover.style.transform='translateZ
 if(window.DeviceOrientationEvent){ window.addEventListener('deviceorientation',(e)=>{ const x=(e.gamma||0)/45/2+0.5; const y=(e.beta||0)/45/2+0.5; parallax(x,y); }, true); }
 
 /* 캐러셀 */
+/*
 const track=document.getElementById('cTrack');
 const slides=[...track.querySelectorAll('.c-slide')];
 const prevBtn=document.getElementById('cPrev');
@@ -486,6 +489,7 @@ track.addEventListener('scroll',()=>{
 });
 track.setAttribute('tabindex','0');
 track.addEventListener('keydown',(e)=>{ if(e.key==='ArrowLeft'){e.preventDefault();go(idx-1);} if(e.key==='ArrowRight'){e.preventDefault();go(idx+1);} });
+*/
 
 /* 컨페티 */
 const fx=document.getElementById('fx'); const ctx=fx.getContext('2d');
@@ -502,6 +506,7 @@ function loop(){ rafId=requestAnimationFrame(loop); ctx.clearRect(0,0,fx.width,f
 }
 document.getElementById('rsvpBtn').addEventListener('click',(e)=>{ const r=e.currentTarget.getBoundingClientRect(); burst(r.left+r.width/2, r.top); });
 document.getElementById('dockRsvp').addEventListener('click',(e)=>{ const r=e.currentTarget.getBoundingClientRect(); burst(r.left+r.width/2, innerHeight-80); });
+
 
 /* 파티클 배경 */
 const pc=document.getElementById('particles'); const pctx=pc.getContext('2d');
